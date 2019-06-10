@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
         for (i = 0; i < NUM_THREADS; i++) {
                 pthread_join(threads[i], NULL);
         }
-        printf (In main: final value of count = %d\n", count);
+        printf ("In main: final value of count = %d\n", count);
 
         /* Clean up and exit */
         pthread_attr_destroy(&attr);
