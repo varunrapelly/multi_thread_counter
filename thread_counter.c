@@ -20,7 +20,7 @@ pthread_mutex_t count_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t count_1 = PTHREAD_COND_INITIALIZER,
                count_2 = PTHREAD_COND_INITIALIZER,
                count_3 = PTHREAD_COND_INITIALIZER;
-int max_cnt = 1000;
+int max_cnt = 4;
 volatile int turn = 0;
 
 void *inc_count1(void *t)
@@ -32,6 +32,7 @@ void *inc_count1(void *t)
 
         while(count <= max_cnt )
         {
+        	printf("%s GOT LOCK\n", __FUNCTION__);
                 pthread_mutex_lock(&count_mutex);
                 while(turn != 0)
                         pthread_cond_wait(&count_1,&count_mutex);
@@ -60,6 +61,7 @@ void *inc_count2(void *t)
         printf("Barrier completed\n");
         while(count <= max_cnt)
         {
+        	printf("%s GOT LOCK\n", __FUNCTION__);
                 pthread_mutex_lock(&count_mutex);
                 while(turn != 1)
                         pthread_cond_wait(&count_2,&count_mutex);
@@ -88,6 +90,7 @@ void *inc_count3(void *t)
 
         while(count <= max_cnt)
         {
+        	printf("%s GOT LOCK\n", __FUNCTION__);
                 pthread_mutex_lock(&count_mutex);
                 while(turn != 2)
                         pthread_cond_wait(&count_3,&count_mutex);
@@ -102,6 +105,7 @@ void *inc_count3(void *t)
                 turn = 0;
                 printf("%d ", count);
                 pthread_cond_signal(&count_1);
+		sleep(10);
                 pthread_mutex_unlock(&count_mutex);
         }
         printf("EXITING 3 NOW\n");
