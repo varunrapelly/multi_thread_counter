@@ -11,4 +11,5 @@ gcc thread_counter.c -lpthread
 count_numbers.c
 This application asks your to enter the number (N) of threads (maximum value supported 1000) and the number to count (C).
 Based on the input, it will create N threads and counts upto C value.
+
 g++ count_numbers.c -std=c++0x -lpthread -g
